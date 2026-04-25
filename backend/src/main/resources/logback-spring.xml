@@ -1,0 +1,38 @@
+<?xml version="1.xml" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS_DIR" value="./logs"/>
+    <property name="APP_NAME" value="chat-ai"/>
+
+    <!-- Консольный аппендер -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%15.15thread] %cyan(%-40.40logger{39}) : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Файловый аппендер -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_DIR}/${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Хранить логи за последние 30 дней -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{39} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Настройка уровня логирования -->
+    <logger name="com.project" level="DEBUG" />
+    
+    <!-- Настройка уровня логирования для Spring -->
+    <logger name="org.springframework" level="INFO" />
+
+    <!-- Главное правило логирования -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
